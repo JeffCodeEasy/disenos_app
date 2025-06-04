@@ -6,6 +6,6 @@ class HeadersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: HeaderWaves());
+    return Scaffold(body: HeaderWaveGradient());
   }
 }
