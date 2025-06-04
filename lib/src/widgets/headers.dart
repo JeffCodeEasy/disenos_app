@@ -32,7 +32,7 @@ class HeaderDiagonal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       // color: Color(0xff615AAB),
@@ -59,6 +59,42 @@ class _HeaderDiagonalPainter extends CustomPainter {
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
     // path.lineTo(0, size.height * 0.5); Flutter va imaginar que hay una linea
+
+    canvas.drawPath(path, lapiz);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class HeaderTriangular extends StatelessWidget {
+  const HeaderTriangular({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: CustomPaint(painter: _HeaderTriangularPainter()),
+    );
+  }
+}
+
+class _HeaderTriangularPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final lapiz = Paint();
+    final path = Path();
+    // Propiedades
+    lapiz.color = Color(0xff615AAB);
+    lapiz.strokeWidth = 20;
+    lapiz.style = PaintingStyle.fill;
+
+    // Dibujar con el path y el lapiz
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 0);
 
     canvas.drawPath(path, lapiz);
   }
