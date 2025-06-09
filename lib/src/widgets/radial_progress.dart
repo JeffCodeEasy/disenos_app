@@ -4,8 +4,19 @@ import 'package:flutter/material.dart';
 
 class RadialProgress extends StatefulWidget {
   final double porcentaje;
+  final Color colorPrimario;
+  final Color colorSecundario;
+  final double grosorPrimario;
+  final double grosorSecundario;
 
-  const RadialProgress({super.key, required this.porcentaje});
+  const RadialProgress({
+    super.key,
+    required this.porcentaje,
+    this.colorPrimario = Colors.blue,
+    this.colorSecundario = Colors.grey,
+    this.grosorPrimario = 10,
+    this.grosorSecundario = 4,
+  });
 
   @override
   State<RadialProgress> createState() => _RadialProgressState();
@@ -50,6 +61,10 @@ class _RadialProgressState extends State<RadialProgress>
             painter: _MiradialProgress(
               (widget.porcentaje - diferenciaAnimar) +
                   (diferenciaAnimar * controller.value),
+              widget.colorPrimario,
+              widget.colorSecundario,
+              widget.grosorPrimario,
+              widget.grosorSecundario,
             ),
           ),
         );
@@ -60,16 +75,26 @@ class _RadialProgressState extends State<RadialProgress>
 
 class _MiradialProgress extends CustomPainter {
   final double porcentaje;
+  final Color colorPrimario;
+  final Color colorSecundario;
+  final double grosorPrimario;
+  final double grosorSecundario;
 
-  _MiradialProgress(this.porcentaje);
+  _MiradialProgress(
+    this.porcentaje,
+    this.colorPrimario,
+    this.colorSecundario,
+    this.grosorSecundario,
+    this.grosorPrimario,
+  );
 
   @override
   void paint(Canvas canvas, Size size) {
     // Circulo completado
     final paint =
         Paint()
-          ..strokeWidth = 5
-          ..color = Colors.grey
+          ..strokeWidth = grosorSecundario
+          ..color = colorSecundario
           ..style = PaintingStyle.stroke;
 
     final Offset center = Offset(size.width * 0.5, size.height / 2);
@@ -80,8 +105,9 @@ class _MiradialProgress extends CustomPainter {
     // arco
     final paintArco =
         Paint()
-          ..strokeWidth = 10
-          ..color = Colors.pink
+          ..strokeWidth = grosorPrimario
+          ..color = colorPrimario
+          ..strokeCap = StrokeCap.round
           ..style = PaintingStyle.stroke;
 
     // Parte que se deberá ir llenando

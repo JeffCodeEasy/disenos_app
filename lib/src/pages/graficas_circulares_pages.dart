@@ -15,12 +15,24 @@ class _GraficasCircularesPagesState extends State<GraficasCircularesPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: 300,
-          height: 300,
-          child: RadialProgress(porcentaje: porcentaje),
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CustomRadialProgress(porcentaje: porcentaje, color: Colors.blue),
+              CustomRadialProgress(porcentaje: porcentaje, color: Colors.red),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CustomRadialProgress(porcentaje: porcentaje, color: Colors.pink),
+              CustomRadialProgress(porcentaje: porcentaje, color: Colors.white),
+            ],
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -32,6 +44,32 @@ class _GraficasCircularesPagesState extends State<GraficasCircularesPages> {
           });
         },
         child: Icon(Icons.refresh),
+      ),
+    );
+  }
+}
+
+class CustomRadialProgress extends StatelessWidget {
+  const CustomRadialProgress({
+    super.key,
+    required this.porcentaje,
+    required this.color,
+  });
+
+  final double porcentaje;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 180,
+      height: 180,
+      child: RadialProgress(
+        porcentaje: porcentaje,
+        colorPrimario: color,
+        colorSecundario: Colors.black,
+        grosorPrimario: 10,
+        grosorSecundario: 8,
       ),
     );
   }
