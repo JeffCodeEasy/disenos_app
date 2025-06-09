@@ -45,15 +45,16 @@ class _CircularProgressPageState extends State<CircularProgressPage>
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          porcentaje += nuevoPorcentaje;
-          nuevoPorcentaje += 10;
-          if (nuevoPorcentaje > 100) {
-            porcentaje = 0;
-            nuevoPorcentaje = 0;
-          }
+          setState(() {
+            porcentaje += nuevoPorcentaje;
+            nuevoPorcentaje += 10;
+            if (nuevoPorcentaje > 100) {
+              porcentaje = 0;
+              nuevoPorcentaje = 0;
+            }
 
-          controller.forward(from: 0.0);
-          setState(() {});
+            controller.forward(from: porcentaje);
+          });
         },
         backgroundColor: Colors.pink,
         child: Icon(Icons.refresh),
