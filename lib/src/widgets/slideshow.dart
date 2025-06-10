@@ -12,14 +12,17 @@ class Slideshow extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => SliderModel(),
       child: Center(
-        child: Column(children: [Expanded(child: _Slides(slides)), _Dots()]),
+        child: Column(
+          children: [Expanded(child: _Slides(slides)), _Dots(slides.length)],
+        ),
       ),
     );
   }
 }
 
 class _Dots extends StatelessWidget {
-  const _Dots();
+  final int totalSlides;
+  const _Dots(this.totalSlides);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class _Dots extends StatelessWidget {
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [_Dot(0), _Dot(1), _Dot(2)],
+        children: List.generate(totalSlides, (index) => _Dot(index),),
       ),
     );
   }
@@ -115,7 +118,7 @@ class _Slide extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       padding: EdgeInsets.all(30),
-      child: slide
+      child: slide,
     );
   }
 }
