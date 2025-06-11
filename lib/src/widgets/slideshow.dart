@@ -1,4 +1,3 @@
-import 'package:disenos_app/src/models/slider_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +6,8 @@ class Slideshow extends StatelessWidget {
   final bool puntosArriba;
   final Color colorPrimario;
   final Color colorSecundario;
+  final double bulletPrimario;
+  final double bulletSecundario;
 
   const Slideshow({
     super.key,
@@ -14,34 +15,57 @@ class Slideshow extends StatelessWidget {
     this.puntosArriba = false,
     this.colorPrimario = Colors.blue,
     this.colorSecundario = Colors.grey,
+    this.bulletPrimario = 12.0,
+    this.bulletSecundario = 12.0,
   });
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => SliderModel(),
-      child: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              if (puntosArriba)
-                _Dots(slides.length, colorPrimario, colorSecundario),
-              Expanded(child: _Slides(slides)),
-              if (!puntosArriba)
-                _Dots(slides.length, colorPrimario, colorSecundario),
-            ],
+      create: (_) => _SliderModel(),
+      builder: (context, child) {
+        Provider.of<_SliderModel>(context).colorPrimario = colorPrimario;
+        Provider.of<_SliderModel>(context).colorSecundario = colorSecundario;
+
+        Provider.of<_SliderModel>(context).bulletPrimario = bulletPrimario;
+        Provider.of<_SliderModel>(context).bulletSecundario = bulletSecundario;
+        return SafeArea(
+          child: Center(
+            child: _CrearEstructuraSlideshow(
+              puntosArriba: puntosArriba,
+              slides: slides,
+            ),
           ),
-        ),
-      ),
+        );
+      },
+    );
+  }
+}
+
+class _CrearEstructuraSlideshow extends StatelessWidget {
+  const _CrearEstructuraSlideshow({
+    required this.puntosArriba,
+    required this.slides,
+  });
+
+  final bool puntosArriba;
+  final List<Widget> slides;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (puntosArriba) _Dots(slides.length),
+        Expanded(child: _Slides(slides)),
+        if (!puntosArriba) _Dots(slides.length),
+      ],
     );
   }
 }
 
 class _Dots extends StatelessWidget {
   final int totalSlides;
-  final Color colorPrimario;
-  final Color colorSecundario;
-  const _Dots(this.totalSlides, this.colorPrimario, this.colorSecundario);
+  const _Dots(this.totalSlides);
 
   @override
   Widget build(BuildContext context) {
@@ -50,36 +74,38 @@ class _Dots extends StatelessWidget {
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          totalSlides,
-          (index) => _Dot(index, colorPrimario, colorSecundario),
-        ),
+        children: List.generate(totalSlides, (index) => _Dot(index)),
       ),
     );
   }
 }
 
 class _Dot extends StatelessWidget {
-  final Color colorPrimario;
-  final Color colorSecundario;
   final int index;
 
-  const _Dot(this.index, this.colorPrimario, this.colorSecundario);
+  const _Dot(this.index);
 
   @override
   Widget build(BuildContext context) {
-    final pageViewIndex = Provider.of<SliderModel>(context).currentPage;
+    double tamano = 0;
+    Color color;
+    final ssModel = Provider.of<_SliderModel>(context);
+    if (ssModel._currentPage >= index - 0.5 &&
+        ssModel.currentPage < index + 0.5) {
+      color = ssModel.colorPrimario;
+      tamano = ssModel.bulletPrimario;
+    } else {
+      tamano = ssModel.bulletSecundario;
+      color = ssModel.colorSecundario;
+    }
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
       margin: EdgeInsets.symmetric(horizontal: 5),
-      width: 12,
-      height: 12,
+      width: tamano,
+      height: tamano,
       decoration: BoxDecoration(
-        color:
-            (pageViewIndex >= index - 0.5 && pageViewIndex < index + 0.5)
-                ? colorPrimario
-                : colorSecundario,
+        color:color,
         shape: BoxShape.circle,
       ),
     );
@@ -104,7 +130,7 @@ class _SlidesState extends State<_Slides> {
     pageViewController.addListener(() {
       // print('Página actual: ${pageViewController.page}');
 
-      Provider.of<SliderModel>(context, listen: false).currentPage =
+      Provider.of<_SliderModel>(context, listen: false).currentPage =
           pageViewController.page!;
     });
   }
@@ -144,5 +170,20 @@ class _Slide extends StatelessWidget {
       padding: EdgeInsets.all(30),
       child: slide,
     );
+  }
+}
+
+class _SliderModel with ChangeNotifier {
+  double _currentPage = 0;
+  Color colorPrimario = Colors.blue;
+  Color colorSecundario = Colors.grey;
+  late double bulletPrimario;
+  late double bulletSecundario;
+
+  double get currentPage => _currentPage;
+
+  set currentPage(double currentPage) {
+    _currentPage = currentPage;
+    notifyListeners();
   }
 }
