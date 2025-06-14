@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HeaderCuadrado extends StatelessWidget {
   const HeaderCuadrado({super.key});
@@ -289,5 +290,74 @@ class _HeaderWaveGradientPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+}
+
+// Headers section 7
+
+class IconHeader extends StatelessWidget {
+  const IconHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Color colorBlanco = Colors.white.withAlpha(180);
+
+    return Stack(
+      children: [
+        _IconHeaderBackground(),
+        Positioned(
+          top: -50,
+          left: -70,
+          child: FaIcon(
+            FontAwesomeIcons.plus,
+            size: 250,
+            color: Colors.white.withAlpha(100),
+          ),
+        ),
+
+        Column(
+          children: [
+            SizedBox(height: 100, width: double.infinity),
+            Text(
+              'Haz solicitado',
+              style: TextStyle(fontSize: 20, color: colorBlanco),
+            ),
+            SizedBox(height: 20),
+
+            Text(
+              'Asistencia médica',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white.withAlpha(200),
+              ),
+            ),
+            SizedBox(height: 10),
+
+            FaIcon(FontAwesomeIcons.plus, size: 100, color: Colors.white),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _IconHeaderBackground extends StatelessWidget {
+  const _IconHeaderBackground();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 300,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xff526bf6), Color(0xff67acf2)],
+        ),
+      ),
+    );
   }
 }
