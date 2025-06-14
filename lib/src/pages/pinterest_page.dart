@@ -30,7 +30,32 @@ class _PinterestMenuLocation extends StatelessWidget {
       bottom: 30,
       child: SizedBox(
         width: widthScreen,
-        child: Align(child: PinterestMenu(mostrar: mostrar)),
+        child: Align(
+          child: PinterestMenu(
+            mostrar: mostrar,
+            // backgroundColor: Colors.black,
+            // activeColor: Colors.white,
+            // inactiveColor: Colors.lightBlue,
+            items: [
+              PinterestButton(
+                onPressed: () => print('Icon pie_chart'),
+                icon: Icons.pie_chart,
+              ),
+              PinterestButton(
+                onPressed: () => print('Icon search'),
+                icon: Icons.search,
+              ),
+              PinterestButton(
+                onPressed: () => print('Icon notifications'),
+                icon: Icons.notifications,
+              ),
+              PinterestButton(
+                onPressed: () => print('Icon supervised_user_circle'),
+                icon: Icons.supervised_user_circle,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -55,7 +80,7 @@ class _PinterestGridState extends State<PinterestGrid> {
     controller.addListener(() {
       // print('ScrollListener ${controller.offset}');
 
-      if (controller.offset > scrollAnterior) {
+      if (controller.offset > scrollAnterior && controller.offset > 150) {
         Provider.of<_MenuModel>(context, listen: false).mostrar = false;
       } else {
         Provider.of<_MenuModel>(context, listen: false).mostrar = true;
@@ -73,6 +98,7 @@ class _PinterestGridState extends State<PinterestGrid> {
   @override
   Widget build(BuildContext context) {
     return MasonryGridView.count(
+      physics: BouncingScrollPhysics(),
       controller: controller,
       crossAxisCount: 2,
       mainAxisSpacing: 10,
