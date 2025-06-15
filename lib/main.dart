@@ -2,7 +2,8 @@
 // import 'package:disenos_app/src/pages/graficas_circulares_pages.dart';
 // import 'package:disenos_app/src/pages/pinterest_page.dart';
 // import 'package:disenos_app/src/pages/slideshow_page.dart';
-import 'package:disenos_app/src/pages/emergency_page.dart';
+// import 'package:disenos_app/src/pages/emergency_page.dart';
+import 'package:disenos_app/src/pages/sliver_list_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
     return  const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
-      home: EmergencyPage(),
+      home: SliverListPage(),
     );
   }
 }
