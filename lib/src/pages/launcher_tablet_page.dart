@@ -1,5 +1,4 @@
 import 'package:disenos_app/src/models/layout_model.dart';
-import 'package:disenos_app/src/pages/slideshow_page.dart';
 import 'package:disenos_app/src/routes/routes.dart';
 import 'package:disenos_app/src/theme/theme.dart';
 import 'package:flutter/material.dart';

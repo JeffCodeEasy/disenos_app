@@ -1,4 +1,4 @@
-import 'package:disenos_app/src/labs/slideshow_page.dart';
+import 'package:disenos_app/src/pages/slideshow_page.dart';
 import 'package:disenos_app/src/pages/animaciones_page.dart';
 import 'package:disenos_app/src/pages/emergency_page.dart';
 import 'package:disenos_app/src/pages/graficas_circulares_pages.dart';

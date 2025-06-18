@@ -106,18 +106,24 @@ class EmergencyPage extends StatelessWidget {
               ),
             )
             .toList();
+    bool isLarge;
+    if (MediaQuery.of(context).size.height > 550) {
+      isLarge = true;
+    } else {
+      isLarge = false;
+    }
 
     return Scaffold(
       body: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 200),
+            margin: EdgeInsets.only(top: isLarge ? 200 : 10),
             child: ListView(
               physics: BouncingScrollPhysics(),
-              children: [SizedBox(height: 80), ...itemMap],
+              children: [(isLarge) ? SizedBox(height: 80) : SizedBox(height: 10), ...itemMap],
             ),
           ),
-          _PageHeader(),
+          if (isLarge) _PageHeader(),
         ],
       ),
     );

@@ -22,9 +22,13 @@ class PinterestPage extends StatelessWidget {
 class _PinterestMenuLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final widthScreen = MediaQuery.of(context).size.width;
+    double widthScreen = MediaQuery.of(context).size.width;
 
     final mostrar = context.watch<_MenuModel>().mostrar;
+
+    if (widthScreen > 500) {
+      widthScreen = widthScreen - 300;
+    }
 
     return Positioned(
       bottom: 30,
@@ -97,10 +101,17 @@ class _PinterestGridState extends State<PinterestGrid> {
 
   @override
   Widget build(BuildContext context) {
+    int count;
+    if (MediaQuery.of(context).size.width > 500) {
+      count = 3;
+    } else {
+      count = 2;
+    }
+
     return MasonryGridView.count(
       physics: BouncingScrollPhysics(),
       controller: controller,
-      crossAxisCount: 2,
+      crossAxisCount: count,
       mainAxisSpacing: 10,
       crossAxisSpacing: 10,
       padding: const EdgeInsets.all(8),
