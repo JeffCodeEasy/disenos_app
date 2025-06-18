@@ -4,6 +4,7 @@
 // import 'package:disenos_app/src/pages/slideshow_page.dart';
 // import 'package:disenos_app/src/pages/emergency_page.dart';
 // import 'package:disenos_app/src/pages/sliver_list_page.dart';
+import 'package:disenos_app/src/models/layout_model.dart';
 import 'package:disenos_app/src/pages/launcher_page.dart';
 import 'package:disenos_app/src/pages/launcher_tablet_page.dart';
 import 'package:disenos_app/src/theme/theme.dart';
@@ -12,9 +13,12 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeChanger(2),
-      child: const MainApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeChanger>(create: (_) => ThemeChanger(2)),
+        ChangeNotifierProvider<LayoutModel>(create: (_) => LayoutModel()),
+      ],
+      child: MainApp(),
     ),
   );
 }

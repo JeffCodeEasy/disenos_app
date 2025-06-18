@@ -1,3 +1,4 @@
+import 'package:disenos_app/src/models/layout_model.dart';
 import 'package:disenos_app/src/pages/slideshow_page.dart';
 import 'package:disenos_app/src/routes/routes.dart';
 import 'package:disenos_app/src/theme/theme.dart';
@@ -10,6 +11,8 @@ class LauncherTabletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.watch<ThemeChanger>().currentTheme;
+    final layoutModel = context.watch<LayoutModel>().currentPage;
+
     return Scaffold(
       drawer: _MenuPrincipal(),
       appBar: AppBar(
@@ -24,7 +27,7 @@ class LauncherTabletPage extends StatelessWidget {
             height: double.infinity,
             color: appTheme.iconTheme.color,
           ),
-          Expanded(child: SlideshowPage()),
+          Expanded(child: layoutModel),
         ],
       ),
     );
@@ -53,10 +56,7 @@ class _ListOpciones extends StatelessWidget {
           title: Text(pageRoutes[index].titulo),
           trailing: Icon(Icons.chevron_right, color: appTheme.iconTheme.color),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => pageRoutes[index].page),
-            );
+           context.read<LayoutModel>().currentPage = pageRoutes[index].page;
           },
         );
       },
